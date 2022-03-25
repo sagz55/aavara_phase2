@@ -10,6 +10,7 @@ export default function Services() {
     {
       icon: service1,
       title: "Stay Budget",
+      // sub1: "duuefuhud",
       subTitle:
         "Let us know how much you are willing to spend on your stay.",
     },
@@ -46,9 +47,7 @@ function Services() {
               <img src={service.icon} alt="" />
             </div> 
             <h3>{service.title}</h3>
-            <div>
-            <input type="text" placeholder=" " />
-            </div>
+            {/* <h5>{Services.sub1}</h5> */}
             <p>{service.subTitle}</p>
           </div>
         );
@@ -65,6 +64,11 @@ const Section = styled.section`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+  .service input{
+    border:1px solid grey;
+    border-radius:3px;
+    padding:1%; 
+  }
   .service {
     display: flex;
     flex-direction: column;

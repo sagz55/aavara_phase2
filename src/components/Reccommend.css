@@ -1,0 +1,40 @@
+.recc_header{
+    background-image: url(../assets/recc.jpeg);
+    height: 24vh ;
+    margin: 1%;
+display: flex;
+font-family: 'Poppins',sans-serif;
+align-items: center;
+object-fit: contain;
+}
+.content{
+flex: 0.97;
+text-align: center;
+color: white;
+font-weight: 200;
+letter-spacing: 1px;
+}
+.prev{
+    flex: 0.03;
+  
+    align-items: center ;
+}
+.prev img{
+    width: 30px;
+    transition: transform .5s ease;
+}.prev img:hover{
+    cursor: pointer;
+    transform: scale(1.25);
+}
+.content input{
+    width: 30%;
+    padding: 0.5%;
+    border: none;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    opacity: 42%;
+    outline: none;
+    margin-top: 1%;
+    padding-left: 1.01%;
+    color: black;
+}

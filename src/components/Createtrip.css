@@ -1,0 +1,66 @@
+.ct_cta{
+    text-align: center;
+    padding: 11%;
+    padding-bottom: 2%;
+    font-family: 'Poppins',sans-serif;
+}
+.ct_ctabutton button{
+    padding: 1% 5%;
+    font-family: 'Lato',sans-serif;
+    border: none;
+    border-radius: 22px;
+    background-color: #016AAE;
+    color: white;
+    font-size: 15px;
+font-weight: 500;
+}
+
+.ct_ctabutton button:hover{
+    cursor: pointer;
+}
+.ct_ctabutton{
+    margin: 2%;
+}
+.ctd_header{
+    text-align: center;
+}
+.ctd_card{
+    
+    width: 16.7vw;
+    height:46vh;
+    text-align:  center;
+    color: white;
+
+    margin: 1%;
+}
+.card_text{
+    margin: 10%;
+}
+.card_text h3{
+    color: gray;
+}
+.c4{
+    background-image: url(../assets/c4.svg);
+    object-fit: contain;
+    background-repeat: no-repeat;
+}
+.c3{
+    background-image: url(../assets/c3.svg);
+    object-fit: contain;
+    background-repeat: no-repeat;
+   
+}
+.c2{
+    background-image: url(../assets/c2.svg);
+    object-fit: contain;
+    background-repeat: no-repeat;
+}
+.c1{
+    background-image: url(../assets/c1.svg);
+    object-fit: contain;
+    background-repeat: no-repeat;
+}
+.ctd_cards{
+    display: flex;
+    justify-content: center;
+}

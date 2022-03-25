@@ -1,10 +1,19 @@
-import React from "react";
+import React ,{useState} from "react";
 import scrollreveal from "scrollreveal";
 import styled from "styled-components";
 import homeImage from "../assets/hero.png";
+import { Link ,useHistory} from 'react-router-dom';
 export default function Hero() {
+  const [destination,setDestination] = useState('')
+  const [budget,setBudget]= useState('')
+  const history= useHistory()
   const scroll =(e)=>{
     scrollreveal().reveal('#recommend')
+  }
+  const go =()=>{
+        history.push('/recommend')
+        localStorage.setItem("Destination",JSON.stringify(destination))
+        localStorage.setItem("Budget",JSON.stringify(budget))
   }
   return (
     <Section id="hero">
@@ -13,30 +22,31 @@ export default function Hero() {
       </div>
       <div className="content">
         <div className="title">
+  
           <h1>AAVARA</h1>
           <p>
-            "Not all those who wander are lost" <br />
-                        Atleast not while we are around :)
+            "Not all those who wander are lost" 
+             Atleast not while we are around :)
           </p>
         </div>
         <div className="search">
           <div className="container">
-            <label htmlFor="">Enter destinatio</label>
-            <input type="text" placeholder="Search..." />
+            <label htmlFor="">Enter destination</label>
+            <input type="text" placeholder="Search..." value={destination} onChange={e=>setDestination(e.target.value)} />
           </div>
           <div className="container">
-            <label htmlFor="">Leaving On</label>
-            <input type="date" />
+            <label htmlFor="">Arriving On</label>
+            <input type="datetime-local" name="" id="" />
           </div>
           <div className="container">
-            <label htmlFor="">Returning</label>
-            <input type="date" />
+            <label htmlFor="">Returning On</label>
+            <input type="datetime-local" name="" id="" />
           </div>
           <div className="container">
             <label htmlFor="">Total Budget</label>
-            <input type="text" placeholder="Amound" />
+            <input type="number" placeholder="Amount"  value={budget} onChange={e=>setBudget(e.target.value)} />
           </div>
-          <button ><a href="#recommend">Explore Now</a> </button>
+         <Link to='/create-trip'>  <button onClick={go} > Explore Now </button></Link>
         </div>
       </div>
     </Section>
@@ -70,7 +80,6 @@ const Section = styled.section`
     gap: 1rem;
     .title {
       color: white;
-      
       h1 {
         font-size: 6rem;
         letter-spacing: 0.2rem;
@@ -78,7 +87,7 @@ const Section = styled.section`
       }
       p {
         text-align: center;
-        padding: 0 30vw;
+        padding: 0 10vw;
         margin-top: 0.5rem;
         font-size: 1.2rem;
       }

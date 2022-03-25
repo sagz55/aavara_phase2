@@ -1,110 +1,157 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
-import Destination2 from "../assets/Destination2.png";
-import Destination3 from "../assets/Destination3.png";
-import Destination4 from "../assets/Destination4.png";
-import Destination5 from "../assets/Destination5.png";
-import Destination6 from "../assets/Destination6.png";
+import Destination2 from "../assets/Destination2.jpeg";
+import Destination3 from "../assets/Destination3.jpeg";
+import Destination4 from "../assets/Destination4.jpeg";
+import Destination5 from "../assets/Destination5.jpeg";
+import Destination6 from "../assets/Destination6.jpeg";
 import info1 from "../assets/info1.png";
+import star from '../assets/star1.png'
+import { auth ,db} from "./Firebase";
 import info2 from "../assets/info2.png";
 import info3 from "../assets/info3.png";
+import {Link} from 'react-router-dom'
+import './Reccommend.css'
+import next  from '../assets/next.png'
+import hotelsss from '../assets/Hotels_india.json'
 
 export default function Recommend() {
-  const data = [
-    {
-      image: Destination1,
-      title: "Singapore",
-      subTitle: "Singapore, officialy thr Republic of Singapore, is a",
-      cost: "38,800",
-      duration: "Approx 2 night trip",
-    },
-    {
-      image: Destination2,
-      title: "Thailand",
-      subTitle: "Thailand is a Southeast Asia country. It's known for",
-      cost: "54,200",
-      duration: "Approx 2 night trip",
-    },
-    {
-      image: Destination3,
-      title: "Paris",
-      subTitle: "Paris, France's capital, is a major European city and a",
-      cost: "45,500",
-      duration: "Approx 2 night trip",
-    },
-    {
-      image: Destination4,
-      title: "New Zealand",
-      subTitle: "New Zealand is an island country in the",
-      cost: "24,100",
-      duration: "Approx 1 night trip",
-    },
-    {
-      image: Destination5,
-      title: "Bora Bora",
-      subTitle: "Bora Bora is a small South Pacific island northwest of",
-      cost: "95,400",
-      duration: "Approx 2 night 2 day trip",
-    },
-    {
-      image: Destination6,
-      title: "London",
-      subTitle: "London, the capital of England and the United",
-      cost: "38,800",
-      duration: "Approx 3 night 2 day trip",
-    },
-  ];
+  const [search,setSearch]= useState('')
+  const [selected,setSelected] =useState('')
+  const [info,setInfo]=useState([])
+  const [wordEntered, setWordEntered] = useState("");
+  const hotels = hotelsss
+  const [press,setPress]= useState('white')
+  const destination = localStorage.getItem('Destination').replace(/"/g, "")
+  const budget = localStorage.getItem('Budget').replace(/"/g, "")
+  const [filteredData, setFilteredData] = useState([]);
+  const divEl = useRef(null);
+  useEffect(()=>{
+    db.collection("Hotels").where("CityName","==",destination).onSnapshot((querySnapshot)=>{
+      const q=[]
 
-  const packages = [
-    "A Place To Stay",
-    "The Perfect Meal",
-    "Find Some EyeCandy",
-    "Any Events Near Me?",
-  ];
+      querySnapshot.forEach((doc)=>{
+        q.push(doc.data())
+      })
+      setInfo(q)
+    })
+   
+   
+  },[])
+  info.map((i)=>{
+    if(i.Price <= 6000){
+      console.log("info ",i.HotelName)
+    }
+  })
+  const [hotel,setDestination]= useState('')
+  const read=()=>{
+    
+  }
+  const handleSelect =(name)=>{
+    setPress("red")
+  
+    divEl.current.style.backgroundColor = '#c94b4b';
+    console.log("Hotel Selected ",name)
+    console.log("Press State",press)
+    localStorage.setItem("Hotel",JSON.stringify(name))
+  }
+  const handleHotel=(e)=>{
 
+    localStorage.setItem("Hotel",JSON.stringify(hotel))
+  }
+const handleSearch=(e)=>{
+
+}
+  
+  
+ 
   const [active, setActive] = useState(1);
   return (
     <Section id="recommend">
-      <div className="title">
-        <h2>Here are some of our recomendations</h2>
+      <div className="recc_header">
+        <div className="content">
+            <h1>Step 1.</h1>
+            <h2>Find A Place To stay</h2>
+            <input type="search" placeholder="Search for a hotel" value={search} onChange={e=>setSearch(e.target.value)} />
+            <div className="searchResults">
+              {
+                filteredData.slice(0,2).map((res)=>{
+                  return(
+                    <p>{res.HotelName} </p>
+                  )
+                })
+              }
+            </div>
+        </div>
+   
+    <div className="prev">
+      <Link to='/select-restaurant'><img src={next} alt="" onClick={handleSearch} /></Link>
+
+    </div>
       </div>
-      <div className="packages">
-        <ul>
-          {packages.map((pkg, index) => {
+      
+      <div >
+
+        { search == "" ? <div className="destinations">{info.map((hotel) => {
+          if(hotel.Price <= budget){
             return (
-              <li
-                className={active === index + 1 ? "active" : ""}
-                onClick={() => setActive(index + 1)}
-              >
-                {pkg}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="destinations">
-        {data.map((destination) => {
-          return (
-            <div className="destination">
-              <img src={destination.image} alt="" />
-              <h3>{destination.title}</h3>
-              <p>{destination.subTitle}</p>
+            <div className="destination" ref={divEl} id={hotel.HotelName}  onClick={()=>handleSelect(hotel.HotelName)} style={{ press }}  >
+              {/* <img src={.image} alt="" /> */}
+              <h3>{hotel.HotelName}</h3>
+              <p>{hotel.HotelAddress}</p>
+              <div className="rating">
+              
+              </div>
+              <div className="info">
+                <div className="services">  
+                  <img src={info1} alt="" />
+                  <img src={info2} alt="" />
+                  <img src={info3} alt="" />
+                </div>
+                <h4>{hotel.Price}</h4>
+              </div>
+              <div className="address">
+                <span>{hotel.Address}</span>
+              </div>
+              <div className="distance">
+                <span>Distance from Airport : <span className="bold">{hotel.Airport}</span>  Kms</span>
+                <span></span>
+              </div>
+            </div>
+          );
+          }
+          
+        })}</div> :  <div className="destinations">{info.map((hotel) => {
+          if(hotel.Price <= budget && hotel.HotelName == search){
+            return (
+            <div className="destination"    >
+              {/* <img src={.image} alt="" /> */}
+              <h3>{hotel.HotelName}</h3>
+              <p>{hotel.HotelAddress}</p>
+              <div className="rating">
+              
+              </div>
               <div className="info">
                 <div className="services">
                   <img src={info1} alt="" />
                   <img src={info2} alt="" />
                   <img src={info3} alt="" />
                 </div>
-                <h4>{destination.cost}</h4>
+                <h4>{hotel.Price}</h4>
+              </div>
+              <div className="address">
+                <span>{hotel.Address}</span>
               </div>
               <div className="distance">
-                <span>1000 Kms</span>
-                <span>{destination.duration}</span>
+                <span>Distance from Airport : <span className="bold">{hotel.Airport}</span>  Kms</span>
+                <span></span>
               </div>
             </div>
           );
-        })}
+          }
+          
+        })}</div> }
       </div>
     </Section>
   );
@@ -114,6 +161,13 @@ const Section = styled.section`
   padding: 2rem 0;
   .title {
     text-align: center;
+  }
+  .rating img{
+    width:20px;
+    
+  }
+  .bold{
+    font-weight:700;
   }
   .packages {
     display: flex;
@@ -173,6 +227,8 @@ const Section = styled.section`
         display: flex;
         justify-content: space-between;
       }
+      .activee {
+        border-bottom: 0.5rem solid #8338ec;
     }
   }
   @media screen and (min-width: 280px) and (max-width: 768px) {
@@ -191,6 +247,9 @@ const Section = styled.section`
     .destinations {
       grid-template-columns: 1fr;
       padding: 0;
+    }
+    div:focus{
+      background-color:'red'
     }
   }
 `;

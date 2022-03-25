@@ -3,6 +3,7 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { Link ,useHistory} from 'react-router-dom';
 import Logo from '../assets/SVGlogo.svg'
 export default function Navbar() {
   const [navbarState, setNavbarState] = useState(false);
@@ -25,19 +26,19 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#home">Home</a>
+            <Link to='/'>Home</Link>
           </li>
           <li>
-            <a href="#services">About</a>
+            <Link to='/recommend'>Travel</Link>
           </li>
           <li>
-            <a href="#recommend">Places</a>
+            <Link to='/reviews'>Reviews</Link>
           </li>
           <li>
-            <a href="#testimonials">Testimonials</a>
+            <Link to='/profile'>Profile</Link>
           </li>
         </ul>
-        <button>Login</button>
+      <Link to='/login'> <button>Login</button></Link> 
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>
@@ -61,6 +62,11 @@ export default function Navbar() {
               Testimonials
             </a>
           </li>
+          <li>
+            <a href="#profile" onClick={() => setNavbarState(false)}>
+              profile
+            </a>
+          </li>
         </ul>
       </ResponsiveNav>
     </>
@@ -80,6 +86,7 @@ const Nav = styled.nav`
       align-items: center;
       gap: 0.4rem;
       font-size: 1.2rem;
+      font-family: Ananda Neptouch 2;
       font-weight: 900;
       text-transform: uppercase;
     }
@@ -107,8 +114,7 @@ const Nav = styled.nav`
       }
       &:first-of-type {
         a {
-          color: #023e8a;
-          font-weight: 900;
+
         }
       }
     }
